@@ -56,7 +56,6 @@ public class Player : MonoBehaviour
         {
             anim.SetBool("isRunning", false);
         }
-
     }
 
     void Rotate()
@@ -74,20 +73,24 @@ public class Player : MonoBehaviour
     public void ChangeHealth(int value)
     {
         health += value;
-        sl.value = health;
-        hpText.text = health.ToString() + "/" + maxHealth.ToString();
-        if(health <= 0)
+        if (health > maxHealth)
+        {
+            health = maxHealth;
+        }
+        else if (health <= 0)
         {
             //Переход на след. уроввень!
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
+        sl.value = health;
+        hpText.text = health.ToString() + "/" + maxHealth.ToString();
     }
 
     private IEnumerator MinusHp()
     {
         for(; ; )
         {
-            yield return new WaitForSeconds(5);
+            yield return new WaitForSeconds(0.5f);
             ChangeHealth(-1);
         }
     }

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
+    public bool enemyBullet;
     public float speed;
     public float lifetime;
     public float distance;
@@ -21,9 +22,14 @@ public class Bullet : MonoBehaviour
         transform.Translate(Vector2.up * speed * Time.deltaTime);
         if(hitInfo.collider != null)
         {
-            if (hitInfo.collider.CompareTag("Enemy"))
+            if (hitInfo.collider.CompareTag("Enemy") && !enemyBullet)
             {
                 hitInfo.collider.GetComponent<Enemy>().TakeDamage(damage);
+                DestroyBullet();
+            }
+            if (hitInfo.collider.CompareTag("Player") && enemyBullet)
+            {
+                hitInfo.collider.GetComponent<Player>().ChangeHealth(damage);
                 DestroyBullet();
             }
         }
