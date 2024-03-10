@@ -22,7 +22,7 @@ public class Spawner : MonoBehaviour
     {
         for (; ; )
         {
-            yield return new WaitForSeconds(5f);
+            yield return new WaitForSeconds(10f);
             Instantiate(enemy, SpawnPos.position, Quaternion.identity);
         }
     }
