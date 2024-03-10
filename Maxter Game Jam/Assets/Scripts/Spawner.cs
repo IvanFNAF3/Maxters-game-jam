@@ -27,7 +27,7 @@ public class Spawner : MonoBehaviour
             {
                 Instantiate(enemy, SpawnPos.position, Quaternion.identity);
             }
-            yield return new WaitForSeconds(5);
+            yield return new WaitForSeconds(25);
         }
     }
 }
