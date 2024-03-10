@@ -14,6 +14,7 @@ public class Gun : MonoBehaviour
     [SerializeField] private float maxReload;
     [SerializeField] private GameObject bullet;
     [SerializeField] private Transform shotPoint;
+    [SerializeField] private AudioSource aud;
     public float offset;
 
     private Player player;
@@ -47,6 +48,7 @@ public class Gun : MonoBehaviour
         {
             if (reload <= 0)
             {
+                aud.Play();
                 Shoot();
             }
         }

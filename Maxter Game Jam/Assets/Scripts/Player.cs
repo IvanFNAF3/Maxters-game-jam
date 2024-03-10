@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Xml.Schema;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -11,15 +10,22 @@ public class Player : MonoBehaviour
     public float maxSpeed;
     public int health;
     public float cooldown;
+    public int kills;
+    private bool youDied;
 
     private float healthCd;
     [SerializeField] private GameObject panel;
     [SerializeField] private GameObject gameOverText;
+    [SerializeField] private Text killsText;
+    [SerializeField] private Text consoleText;
     [SerializeField] private GameObject gameOverPanel;
     [SerializeField] private Text hpText;
     [SerializeField] private Slider sl;
     [SerializeField] private Transform gun;
     [SerializeField] private SpriteRenderer[] bodyParts;
+    [SerializeField] private AudioSource walkAud;
+    [SerializeField] private AudioSource audHeal;
+    [SerializeField] private AudioSource boomHeal;
 
     public bool canMove;
     private float speed;
@@ -29,6 +35,7 @@ public class Player : MonoBehaviour
     private bool isRight = true;
     void Start()
     {
+        AudioListener.pause = false;
         canMove = true;
         speed = maxSpeed;
 
@@ -62,10 +69,13 @@ public class Player : MonoBehaviour
         if (moveInput.x != 0 || moveInput.y != 0)
         {
             anim.SetBool("isRunning", true);
+            if(!walkAud.isPlaying)
+                walkAud.Play();
         }
         else
         {
             anim.SetBool("isRunning", false);
+            walkAud.Stop();
         }
 
         if(healthCd > 0)
@@ -91,6 +101,7 @@ public class Player : MonoBehaviour
         if(value > 0 && healthCd <= 0)
         {
             health += value;
+            audHeal.Play();
             StopAllCoroutines();
             StartCoroutine(MinusHp());
             StartCoroutine(HealEffect());
@@ -104,6 +115,7 @@ public class Player : MonoBehaviour
         {
             //print("OUCH");
             health += value;
+            boomHeal.Play();
             StopAllCoroutines();
             StartCoroutine(MinusHp());
             StartCoroutine(BloodEffect());
@@ -117,6 +129,7 @@ public class Player : MonoBehaviour
         {
             //Переход на след. уроввень!
             //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            youDied = true;
             StartDeath();
         }
         sl.value = health;
@@ -174,9 +187,27 @@ public class Player : MonoBehaviour
 
     public void StartDeath()
     {
+        AudioListener.pause = true;
+        for (int i = 0; i < bodyParts.Length; i++)
+        {
+            bodyParts[i].color = new Color(1, 1, 1, 1);
+        }
+        killsText.text = "Врачей убито: " + kills;
         canMove = false;
         StopAllCoroutines();
-        anim.SetTrigger("Death");
+
+        if(youDied)
+        {
+            anim.SetTrigger("Death");
+            consoleText.color = Color.green;
+            consoleText.text = "Поздравляю, ты победил в этой игре!!!";
+        }
+        else
+        {
+            consoleText.color = Color.red;
+            consoleText.text = "К сожалению время истекло, а вы ещё живы";
+        }
+
         panel.SetActive(true);
     }
     public void GameOver()

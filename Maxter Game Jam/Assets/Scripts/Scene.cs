@@ -5,6 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class Scene : MonoBehaviour
 {
+    private void Start()
+    {
+        AudioListener.pause = false;
+    }
     public void ChangeScenes(int numberScene)
     {
         SceneManager.LoadScene(numberScene);

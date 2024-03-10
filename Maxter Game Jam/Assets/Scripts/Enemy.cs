@@ -36,6 +36,7 @@ public class Enemy : MonoBehaviour
         health -= damage;
         if(health <= 0)
         {
+            player.kills++;
             gm.enemies.Remove(this);
             Destroy(gameObject);
         }
