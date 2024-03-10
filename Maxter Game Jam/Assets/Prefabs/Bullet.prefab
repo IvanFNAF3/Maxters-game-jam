@@ -28,7 +28,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0.4}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -74,7 +74,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 3
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 73bf6f5905a0419479a41d7aa9a7af85, type: 3}
   m_Color: {r: 1, g: 1, b: 0.08627451, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -99,9 +99,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyBullet: 0
   speed: 20
-  lifetime: 3
-  distance: 3
+  lifetime: 1
+  distance: 1
   damage: 1
   mask:
     serializedVersion: 2
     m_Bits: 8
+  bulletEffect: {fileID: 879616919395581265, guid: 858e1aa35cf951c458a7ceb31a91aaff, type: 3}

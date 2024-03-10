@@ -5,6 +5,7 @@ using UnityEngine;
 public class Mine : MonoBehaviour
 {
     private MineSpawner ms;
+    public GameObject mineEffect;
 
     private void Start()
     {
@@ -16,14 +17,19 @@ public class Mine : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             collision.gameObject.GetComponent<Player>().ChangeHealth(-45);
-            ms.curMines--;
-            Destroy(gameObject);
+            DestroyMine();
         }
         else if (collision.CompareTag("Enemy"))
         {
             collision.gameObject.GetComponent<Enemy>().TakeDamage(45);
-            ms.curMines--;
-            Destroy(gameObject);
+            DestroyMine();
         }
+    }
+
+    public void DestroyMine()
+    {
+        ms.curMines--;
+        Instantiate(mineEffect, transform.position, Quaternion.identity);
+        Destroy(gameObject);
     }
 }
