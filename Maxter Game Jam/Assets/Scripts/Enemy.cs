@@ -9,10 +9,13 @@ public class Enemy : MonoBehaviour
     public int health;
     public float speed;
     private Player player;
+    private GameManager gm;
 
     private void Awake()
     {
         player = FindObjectOfType<Player>();
+        gm = FindObjectOfType<GameManager>();
+        gm.enemies.Add(this);
     }
 
     public void Update()
@@ -33,6 +36,7 @@ public class Enemy : MonoBehaviour
         health -= damage;
         if(health <= 0)
         {
+            gm.enemies.Remove(this);
             Destroy(gameObject);
         }
     }
