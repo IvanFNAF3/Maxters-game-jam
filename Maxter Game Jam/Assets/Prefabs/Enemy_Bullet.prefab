@@ -105,4 +105,3 @@ MonoBehaviour:
   mask:
     serializedVersion: 2
     m_Bits: 72
-  bulletEffect: {fileID: 1085882296385164831, guid: a2b558761966d704588f73657fd00088, type: 3}

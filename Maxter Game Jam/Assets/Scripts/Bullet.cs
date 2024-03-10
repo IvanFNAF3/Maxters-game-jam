@@ -10,7 +10,6 @@ public class Bullet : MonoBehaviour
     public float distance;
     public int damage;
     public LayerMask mask;
-    public GameObject bulletEffect;
 
     private void Awake()
     {
@@ -38,7 +37,6 @@ public class Bullet : MonoBehaviour
 
     public void DestroyBullet()
     {
-        Instantiate(bulletEffect, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }
 
