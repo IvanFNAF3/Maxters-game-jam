@@ -108,8 +108,10 @@ public class Player : MonoBehaviour
         }
         else if (health <= 0)
         {
+            print("LOOL");
             //Переход на след. уроввень!
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            //anim.SetTrigger("Death");
+            //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
         sl.value = health;
         hpText.text = health.ToString() + "/" + maxHealth.ToString();
