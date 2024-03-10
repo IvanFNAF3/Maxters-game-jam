@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Spawner : MonoBehaviour
@@ -7,6 +6,7 @@ public class Spawner : MonoBehaviour
     public Transform SpawnPos;
     public GameObject enemy;
     private GameManager gm;
+    private int cooldown = 25;
 
 
 

@@ -26,7 +26,6 @@ public class Player : MonoBehaviour
     private bool isRight = true;
     void Start()
     {
-        ChangeHealth(maxHealth);
         speed = maxSpeed;
 
         sl.maxValue = maxHealth;
@@ -85,6 +84,8 @@ public class Player : MonoBehaviour
         if(value > 0 && healthCd <= 0)
         {
             health += value;
+            StopAllCoroutines();
+            StartCoroutine(MinusHp());
             StartCoroutine(HealEffect());
             healthCd = cooldown;
         }
@@ -96,6 +97,8 @@ public class Player : MonoBehaviour
         {
             //print("OUCH");
             health += value;
+            StopAllCoroutines();
+            StartCoroutine(MinusHp());
             StartCoroutine(BloodEffect());
         }
 
