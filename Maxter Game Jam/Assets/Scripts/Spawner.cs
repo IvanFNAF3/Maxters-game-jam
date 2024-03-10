@@ -17,16 +17,13 @@ public class Spawner : MonoBehaviour
     }
 
 
-    void Repeat()
-    {
-        StartCoroutine(SpawnCD());
-    }
-
 
     IEnumerator SpawnCD()
     {
-        yield return new WaitForSeconds(5f);
-        Instantiate(enemy, SpawnPos.position, Quaternion.identity);
-        Repeat();
+        for (; ; )
+        {
+            yield return new WaitForSeconds(5f);
+            Instantiate(enemy, SpawnPos.position, Quaternion.identity);
+        }
     }
 }
