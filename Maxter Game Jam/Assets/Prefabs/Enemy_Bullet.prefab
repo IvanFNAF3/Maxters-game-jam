@@ -98,10 +98,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyBullet: 1
-  speed: 8
-  lifetime: 1
-  distance: 1
-  damage: 3
+  speed: 10
+  lifetime: 3
+  distance: 3
+  damage: 6
   mask:
     serializedVersion: 2
     m_Bits: 72

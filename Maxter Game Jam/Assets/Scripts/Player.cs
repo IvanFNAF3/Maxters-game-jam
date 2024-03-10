@@ -26,7 +26,7 @@ public class Player : MonoBehaviour
     private bool isRight = true;
     void Start()
     {
-        health = maxHealth;
+        ChangeHealth(maxHealth);
         speed = maxSpeed;
 
         sl.maxValue = maxHealth;
@@ -85,12 +85,18 @@ public class Player : MonoBehaviour
         if(value > 0 && healthCd <= 0)
         {
             health += value;
-            StartCoroutine(BloodEffect());
+            StartCoroutine(HealEffect());
             healthCd = cooldown;
         }
-        else if(value < 0)
+        else if(value < 0 && value >= -1)
         {
             health += value;
+        }
+        else if(value < -1)
+        {
+            //print("OUCH");
+            health += value;
+            StartCoroutine(BloodEffect());
         }
 
         if (health > maxHealth)
@@ -115,7 +121,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    private IEnumerator BloodEffect()
+    private IEnumerator HealEffect()
     {
         //print("HEAL");
         for (float r = 0f; r < 1f; r += 0.1f)
@@ -125,6 +131,28 @@ public class Player : MonoBehaviour
                 bodyParts[i].color = new Color(r, 1, r, 1);
             }
             yield return new WaitForSeconds(0.1f);
+        }
+
+        for (int i = 0; i < bodyParts.Length; i++)
+        {
+            bodyParts[i].color = new Color(1, 1, 1, 1);
+        }
+    }
+
+    private IEnumerator BloodEffect()
+    {
+        //print("HEAL");
+        for (float r = 0f; r < 1f; r += 0.1f)
+        {
+            for (int i = 0; i < bodyParts.Length; i++)
+            {
+                bodyParts[i].color = new Color(1, r, r, 1);
+            }
+            yield return new WaitForSeconds(0.1f);
+        }
+        for (int i = 0; i < bodyParts.Length; i++)
+        {
+            bodyParts[i].color = new Color(1, 1, 1, 1);
         }
     }
 }
