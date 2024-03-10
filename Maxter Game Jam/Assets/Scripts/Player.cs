@@ -13,12 +13,15 @@ public class Player : MonoBehaviour
     public float cooldown;
 
     private float healthCd;
+    [SerializeField] private GameObject panel;
+    [SerializeField] private GameObject gameOverText;
+    [SerializeField] private GameObject gameOverPanel;
     [SerializeField] private Text hpText;
     [SerializeField] private Slider sl;
     [SerializeField] private Transform gun;
     [SerializeField] private SpriteRenderer[] bodyParts;
-    
 
+    public bool canMove;
     private float speed;
     private Vector2 moveInput;
     private Rigidbody2D rb;
@@ -26,6 +29,7 @@ public class Player : MonoBehaviour
     private bool isRight = true;
     void Start()
     {
+        canMove = true;
         speed = maxSpeed;
 
         sl.maxValue = maxHealth;
@@ -37,8 +41,11 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
-        moveInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-        rb.velocity = moveInput * speed;
+        if(canMove) 
+        { 
+            moveInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+            rb.velocity = moveInput * speed;
+        }
     }
 
     private void Update()
@@ -106,10 +113,11 @@ public class Player : MonoBehaviour
         {
             health = maxHealth;
         }
-        else if (health <= 0)
+        else if (health <= 0 && canMove)
         {
             //Переход на след. уроввень!
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            StartDeath();
         }
         sl.value = health;
         hpText.text = health.ToString() + "/" + maxHealth.ToString();
@@ -126,36 +134,57 @@ public class Player : MonoBehaviour
 
     private IEnumerator HealEffect()
     {
-        //print("HEAL");
-        for (float r = 0f; r < 1f; r += 0.1f)
+        if(canMove)
         {
+            //print("HEAL");
+            for (float r = 0f; r < 1f; r += 0.1f)
+            {
+                for (int i = 0; i < bodyParts.Length; i++)
+                {
+                    bodyParts[i].color = new Color(r, 1, r, 1);
+                }
+                yield return new WaitForSeconds(0.1f);
+            }
+
             for (int i = 0; i < bodyParts.Length; i++)
             {
-                bodyParts[i].color = new Color(r, 1, r, 1);
+                bodyParts[i].color = new Color(1, 1, 1, 1);
             }
-            yield return new WaitForSeconds(0.1f);
-        }
-
-        for (int i = 0; i < bodyParts.Length; i++)
-        {
-            bodyParts[i].color = new Color(1, 1, 1, 1);
         }
     }
 
     private IEnumerator BloodEffect()
     {
-        //print("HEAL");
-        for (float r = 0f; r < 1f; r += 0.1f)
+        if(canMove)
         {
+            for (float r = 0f; r < 1f; r += 0.1f)
+            {
+                for (int i = 0; i < bodyParts.Length; i++)
+                {
+                    bodyParts[i].color = new Color(1, r, r, 1);
+                }
+                yield return new WaitForSeconds(0.1f);
+            }
             for (int i = 0; i < bodyParts.Length; i++)
             {
-                bodyParts[i].color = new Color(1, r, r, 1);
+                bodyParts[i].color = new Color(1, 1, 1, 1);
             }
-            yield return new WaitForSeconds(0.1f);
         }
-        for (int i = 0; i < bodyParts.Length; i++)
-        {
-            bodyParts[i].color = new Color(1, 1, 1, 1);
-        }
+    }
+
+    public void StartDeath()
+    {
+        canMove = false;
+        StopAllCoroutines();
+        anim.SetTrigger("Death");
+        panel.SetActive(true);
+    }
+    public void GameOver()
+    {
+        gameOverText.SetActive(true);
+    }
+    public void EndDeath()
+    {
+        gameOverPanel.SetActive(true);
     }
 }

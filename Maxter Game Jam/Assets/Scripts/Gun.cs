@@ -28,7 +28,7 @@ public class Gun : MonoBehaviour
 
     private void Update()
     {
-        if (gunType == GunType.Player)
+        if (gunType == GunType.Player && player.canMove)
         {
             difference = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
             rotZ = Mathf.Atan2(difference.y, difference.x) * Mathf.Rad2Deg;
