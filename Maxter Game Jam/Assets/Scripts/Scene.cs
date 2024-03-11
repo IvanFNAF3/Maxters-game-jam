@@ -7,7 +7,7 @@ public class Scene : MonoBehaviour
 {
     private void Start()
     {
-        AudioListener.pause = false;
+        //AudioListener.pause = false;
     }
     public void ChangeScenes(int numberScene)
     {

@@ -33,6 +33,11 @@ public class Bullet : MonoBehaviour
                 hitInfo.collider.GetComponent<Player>().ChangeHealth(damage);
                 DestroyBullet();
             }
+            if (hitInfo.collider.CompareTag("Ball") && !enemyBullet)
+            {
+                hitInfo.collider.GetComponent<Ball>().ChangeHP(damage);
+                DestroyBullet();
+            }
         }
     }
 

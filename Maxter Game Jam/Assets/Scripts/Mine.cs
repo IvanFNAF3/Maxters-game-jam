@@ -6,6 +6,7 @@ public class Mine : MonoBehaviour
 {
     private MineSpawner ms;
     public GameObject mineEffect;
+    public int damage;
 
     private void Start()
     {
@@ -16,12 +17,12 @@ public class Mine : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            collision.gameObject.GetComponent<Player>().ChangeHealth(-45);
+            collision.gameObject.GetComponent<Player>().ChangeHealth(-damage);
             DestroyMine();
         }
         else if (collision.CompareTag("Enemy"))
         {
-            collision.gameObject.GetComponent<Enemy>().TakeDamage(45);
+            collision.gameObject.GetComponent<Enemy>().TakeDamage(damage);
             DestroyMine();
         }
     }

@@ -145,6 +145,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mineEffect: {fileID: 551022108758964521, guid: 5c195cc826092e24a8ef0c4d67e2642a, type: 3}
+  damage: 30
 --- !u!95 &6281804689377153870
 Animator:
   serializedVersion: 5

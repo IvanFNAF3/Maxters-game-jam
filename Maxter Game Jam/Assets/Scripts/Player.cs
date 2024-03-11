@@ -26,12 +26,14 @@ public class Player : MonoBehaviour
     [SerializeField] private AudioSource walkAud;
     [SerializeField] private AudioSource audHeal;
     [SerializeField] private AudioSource boomHeal;
+    [SerializeField] private AudioSource audCactus;
 
     public bool canMove;
     private float speed;
     private Vector2 moveInput;
     private Rigidbody2D rb;
     private Animator anim;
+    private GameManager gm;
     private bool isRight = true;
     void Start()
     {
@@ -41,6 +43,7 @@ public class Player : MonoBehaviour
 
         sl.maxValue = maxHealth;
 
+        gm = FindObjectOfType<GameManager>();
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         StartCoroutine(MinusHp());
@@ -111,7 +114,16 @@ public class Player : MonoBehaviour
         {
             health += value;
         }
-        else if(value < -1)
+        else if(value <= -15 && value > -20)
+        {
+            health += value;
+            //boomHeal.Play();
+            audCactus.Play();
+            StopAllCoroutines();
+            StartCoroutine(MinusHp());
+            StartCoroutine(BloodEffect());
+        }
+        else if(value < -25)
         {
             //print("OUCH");
             health += value;
@@ -119,6 +131,10 @@ public class Player : MonoBehaviour
             StopAllCoroutines();
             StartCoroutine(MinusHp());
             StartCoroutine(BloodEffect());
+        }
+        else
+        {
+            health += value;
         }
 
         if (health > maxHealth)
@@ -132,6 +148,12 @@ public class Player : MonoBehaviour
             youDied = true;
             StartDeath();
         }
+        if(health <= 100)
+        {
+            if(gm.monster.activeSelf)
+                gm.SpawnMonster(false);
+        }
+
         sl.value = health;
         hpText.text = health.ToString() + "/" + maxHealth.ToString();
     }

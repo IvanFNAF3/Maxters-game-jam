@@ -6,9 +6,12 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     public List<Enemy> enemies = new List<Enemy>();
+    public int balls;
     public int maxEnemies;
     public bool spawnEnemies;
     public int maxTime;
+    public GameObject monster;
+    [SerializeField] private AudioSource monsterSpawnMp3;
     [SerializeField] private Text counterText;
     private Player player;
 
@@ -31,6 +34,21 @@ public class GameManager : MonoBehaviour
         {
             spawnEnemies = true;
         }
+    }
+
+    public void CheckMonster()
+    {
+        balls--;
+        if(balls <= 0)
+        {
+            SpawnMonster(true);
+        }
+    }
+
+    public void SpawnMonster(bool isSpawn)
+    {
+        monsterSpawnMp3.Play();
+        monster.SetActive(isSpawn);
     }
 
     private IEnumerator CounterCoroutine()
