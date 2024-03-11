@@ -101,7 +101,7 @@ MonoBehaviour:
   speed: 10
   lifetime: 3
   distance: 3
-  damage: 20
+  damage: 10
   mask:
     serializedVersion: 2
     m_Bits: 72
